@@ -1,0 +1,42 @@
+# Generated docker compose file
+services:
+  F1TENTH_developer_container:
+    container_name: F1TENTH_developer_container
+    image: f1tenth_developer:$IM_VERSION
+    # build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    # runtime: nvidia
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           capabilities: [gpu]
+
+    environment:
+      VEHICLE: $VEHICLE
+      QT_X11_NO_MITSHM: 1
+      DISPLAY: $DISPLAY
+    volumes:
+      - /dev:/dev
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /tmp/argus_socket:/tmp/argus_socket:rw # For jetson machines
+
+      - ./.env:/workspace/.env
+      
+      - ../F1TENTH_LOG:/workspace/LOG
+      - ./entry.sh:/entry.sh
+      
+      - ../ros2_f1tenth:/workspace/src/ros2_f1tenth
+
+    working_dir: /workspace
+    user: f1tenth
+    privileged: true
+    stdin_open: true 
+    tty: true        
+    restart: no  # no/always
+
+    ipc: host
+    network_mode: "host"
+    entrypoint: [ "/entry.sh" ]

@@ -1,0 +1,25 @@
+{
+  "name": "F1TENTH Developer",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "F1TENTH_developer_container",  // The name of your main service from docker-compose.yml
+  "workspaceFolder": "/workspace",  // Inside the container folder mapping
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers",
+        "ms-vscode.remote-explorer",
+        "twxs.cmake",
+        "josetr.cmake-language-support-vscode",
+        "ms-vscode.cmake-tools",
+        "ms-iot.vscode-ros",
+        "gruntfuggly.todo-tree"
+      ],
+      "settings": {}
+    }
+  },
+  "shutdownAction": "none"  // What happens to the container when VS Code shuts down
+}
+
