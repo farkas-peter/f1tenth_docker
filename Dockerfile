@@ -69,6 +69,7 @@ RUN apt update && apt install -y 											\
 		libasio-dev 														\
 		pcl-tools 															\
 		python3-tk 															\
+		ros-$ROS_DISTRO-asio-cmake-module 										\
 		ros-$ROS_DISTRO-ackermann-msgs 										\
 		ros-$ROS_DISTRO-camera-calibration 									\
 		ros-$ROS_DISTRO-can-msgs 											\
@@ -96,12 +97,18 @@ RUN apt update && apt install -y 											\
 	rm -rf /tmp/* 
 
 ## Create workspace for ROS2(workspace)
-RUN mkdir -p /workspace/src 
+RUN mkdir -p /workspace/src
+
+## Adding egy f1-tenth stack
+RUN cd /workspace/src && git clone https://github.com/f1tenth/f1tenth_system.git
+RUN cd /workspace/src/f1tenth_system && git checkout humble-devel && git submodule update --init --force --remote
 
 
 ## ROS2 workspace build
-RUN cd /workspace 							&& \
+RUN cd /workspace && apt update							&& \
 	source /opt/ros/$ROS_DISTRO/setup.bash 		&& \
+	DEBIAN_FRONTEND=noninteractive rosdep update && \
+	DEBIAN_FRONTEND=noninteractive rosdep install --from-paths src -i -y && \
 	colcon build --symlink-install
 
 ## Settings in bashrc

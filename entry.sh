@@ -6,8 +6,8 @@ echo f1tenth | sudo -S -k service ssh start
 # Source ROS2 packages
 source /opt/ros/$ROS_DISTRO/setup.bash
 
-cd /workspace && colcon build --symlink-install
-source /workspace/install/setup.bash
+#cd /workspace && colcon build --symlink-install
+#source /workspace/install/setup.bash
 
 # Start user prompt and keep it open
 if [ -z "${DISPLAY}" ] 
