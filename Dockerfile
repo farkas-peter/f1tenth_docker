@@ -22,7 +22,7 @@ RUN apt-get update 									 && \
 		nano 											\
 		net-tools 										\
 		openssh-server 									\
-		python3-pip 									\
+		python3-pip 													\
 		snap 											\
 		software-properties-common 						\
 		sudo 											\
@@ -77,11 +77,13 @@ RUN apt update && apt install -y 											\
 		ros-$ROS_DISTRO-foxglove-bridge 									\
 		ros-$ROS_DISTRO-gps-msgs 											\
 		ros-$ROS_DISTRO-joy 												\
+		ros-$ROS_DISTRO-librealsense2*										\
 		ros-$ROS_DISTRO-message-filters 									\
 		ros-$ROS_DISTRO-pcl-conversions 									\
 		ros-$ROS_DISTRO-pcl-ros 									\
 		ros-$ROS_DISTRO-plotjuggler-ros 									\
 		ros-$ROS_DISTRO-python-qt-binding 									\
+		ros-$ROS_DISTRO-realsense2-*										\
 		ros-$ROS_DISTRO-robot-localization 									\
 		ros-$ROS_DISTRO-rosbag2-storage-mcap 								\
 		ros-$ROS_DISTRO-rqt-gui-py 											\
@@ -103,6 +105,9 @@ RUN mkdir -p /workspace/src
 RUN cd /workspace/src && git clone https://github.com/f1tenth/f1tenth_system.git
 RUN cd /workspace/src/f1tenth_system && git checkout humble-devel && git submodule update --init --force --remote
 
+## Adding Logitech F710 driver
+#RUN cd /workspace/src && git clone https://github.com/jetsonhacks/logitech-f710-module.git
+#RUN cd /workspace/src/logitech-f710-module && ./install-module.sh
 
 ## ROS2 workspace build
 RUN cd /workspace && apt update							&& \
