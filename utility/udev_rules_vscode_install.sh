@@ -5,6 +5,8 @@ sudo add-apt-repository "deb [arch=arm64] https://packages.microsoft.com/repos/v
 sudo apt install code
 code --version
 
+sudo apt install terminator
+
 cd /etc/udev/rules.d/
 sudo touch 99-vesc.rules
 sudo chmod 646 99-vesc.rules
