@@ -6,7 +6,7 @@ services:
     # build:
     #  context: .
     #  dockerfile: Dockerfile
-    # runtime: nvidia
+    runtime: nvidia
     # deploy:
     #   resources:
     #     reservations:
@@ -23,8 +23,8 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/argus_socket:/tmp/argus_socket:rw # For jetson machines
 
-      - ./.env:/workspace/.env
-      
+      - ./.env:/workspace/.env      
+
       - ../F1TENTH_LOG:/workspace/LOG
       - ./entry.sh:/entry.sh
       

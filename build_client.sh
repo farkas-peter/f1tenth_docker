@@ -12,7 +12,7 @@ export BASE_IMG="nvidia/cuda:12.2.0-base-ubuntu22.04"
 if [ "$(dpkg --print-architecture)" == "amd64" ]; then
     BASE_IMG="nvidia/cuda:12.2.0-base-ubuntu22.04"
 elif [ "$(dpkg --print-architecture)" == "arm64" ]; then
-    BASE_IMG="nvcr.io/nvidia/l4t-base:r36.2.0"
+    BASE_IMG="ultralytics/ultralytics:latest-jetson-jetpack5"
 else
     echo "Error: Unsupported architecture."
     exit 1

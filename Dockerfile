@@ -48,8 +48,8 @@ RUN useradd -m $HOST_USER 												&& \
 	usermod  --uid $HOST_UID $HOST_USER 								&& \
 	groupmod --gid $HOST_GID $HOST_USER
 
-## Install ros humble
-ENV ROS_DISTRO=humble
+## Install ros foxy
+ENV ROS_DISTRO=foxy
 RUN apt update 															&& \ 
 	add-apt-repository universe  										&& \ 
 	curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
@@ -74,7 +74,6 @@ RUN apt update && apt install -y 											\
 		ros-$ROS_DISTRO-camera-calibration 									\
 		ros-$ROS_DISTRO-can-msgs 											\
 		ros-$ROS_DISTRO-cv-bridge 											\
-		ros-$ROS_DISTRO-foxglove-bridge 									\
 		ros-$ROS_DISTRO-gps-msgs 											\
 		ros-$ROS_DISTRO-joy 												\
 		ros-$ROS_DISTRO-librealsense2*										\
@@ -94,16 +93,19 @@ RUN apt update && apt install -y 											\
 		ros-$ROS_DISTRO-udp-msgs 											\
 		ros-$ROS_DISTRO-usb-cam 											\
 		ros-$ROS_DISTRO-xacro 											 && \
+	pip install pygame pygame_gui setuptools==58.2.0  && 		\
 	apt-get clean -qq 													 && \
 	rm -rf /var/lib/apt/lists/* 										 && \
 	rm -rf /tmp/* 
 
+# ros-$ROS_DISTRO-foxglove-bridge 	
+								\
 ## Create workspace for ROS2(workspace)
 RUN mkdir -p /workspace/src
 
 ## Adding egy f1-tenth stack
 RUN cd /workspace/src && git clone https://github.com/f1tenth/f1tenth_system.git
-RUN cd /workspace/src/f1tenth_system && git checkout humble-devel && git submodule update --init --force --remote
+RUN cd /workspace/src/f1tenth_system &&  git submodule update --init --recursive
 
 ## Adding Logitech F710 driver
 #RUN cd /workspace/src && git clone https://github.com/jetsonhacks/logitech-f710-module.git
@@ -112,7 +114,7 @@ RUN cd /workspace/src/f1tenth_system && git checkout humble-devel && git submodu
 ## ROS2 workspace build
 RUN cd /workspace && apt update							&& \
 	source /opt/ros/$ROS_DISTRO/setup.bash 		&& \
-	DEBIAN_FRONTEND=noninteractive rosdep update && \
+	DEBIAN_FRONTEND=noninteractive rosdep update --include-eol-distros && \
 	DEBIAN_FRONTEND=noninteractive rosdep install --from-paths src -i -y && \
 	colcon build --symlink-install
 
@@ -123,6 +125,10 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc 			&& \
 	echo "export RCUTILS_COLORIZED_OUTPUT=1" >> /etc/bash.bashrc 				&& \
 	echo "set -a && source /workspace/.env && set +a" >> /etc/bash.bashrc 		&& \
 	echo "cd /workspace" >> /etc/bash.bashrc
+
+## Adding additional packages
+RUN cd /workspace/src && pip install onnxslim==0.1.48 numpy==1.23.5 pyrealsense2
+
 
 ## Set environment variables for terminator
 RUN echo "export NO_AT_BRIDGE=1" >> /etc/bash.bashrc
