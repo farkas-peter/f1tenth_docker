@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+# If cannot ssh from an external machine, maybe an other network blocks it:
+# E.g., the wired connection, if it is in the same IP range (e.g., both starts with 10.0.10)
+# Show networks: nmcli connection show
+# Remove a network: nmcli connection delete <connection_name>
+
 export CONNECTION_NAME='f1tenth'
 export CONNECTION_SSID='f1tenth'
 export CONNECTION_PASS='f1tenth_2025'
