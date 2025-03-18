@@ -84,3 +84,15 @@ Recommended to wait untill the extensions are installed before the vscode closed
 
 ---
 
+## Link collection
+Use Yolo on Jetson platforms:
+- https://docs.ultralytics.com/guides/nvidia-jetson/
+
+Next useful link:
+- ...
+
+## Useful commands
+- ROS node topology: `rrun rqt_graph rqt_graphpeed`
+![plot](utility/rqt_graph.png)
+
+- ...
