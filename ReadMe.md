@@ -88,8 +88,11 @@ Recommended to wait untill the extensions are installed before the vscode closed
 Use Yolo on Jetson platforms:
 - https://docs.ultralytics.com/guides/nvidia-jetson/
 
-Next useful link:
-- ...
+RealSense SDK install for Jetson:
+- https://dev.intelrealsense.com/docs/nvidia-jetson-tx2-installation
+
+F1Tenth's website:
+- https://roboracer.ai/build
 
 ## Useful commands
 - ROS node topology: `rrun rqt_graph rqt_graphpeed`
