@@ -103,16 +103,12 @@ RUN apt update && apt install -y 											\
 ## Create workspace for ROS2(workspace)
 RUN mkdir -p /workspace/src
 
-## Adding egy f1-tenth stack
-RUN cd /workspace/src && git clone https://github.com/f1tenth/f1tenth_system.git
-RUN cd /workspace/src/f1tenth_system &&  git submodule update --init --recursive
+## Adding the f1-tenth stack
+RUN cd /workspace/src && git clone https://github.com/farkas-peter/f1tenth_system.git
 
-## Adding f1tenth_stack_own
-RUN cd /workspace/src && git clone https://github.com/farkas-peter/f1tenth_stack_own.git
+#RUN cd /workspace/src && git clone https://github.com/f1tenth/f1tenth_system.git
+#RUN cd /workspace/src/f1tenth_system &&  git submodule update --init --force --remote
 
-## Adding Logitech F710 driver
-#RUN cd /workspace/src && git clone https://github.com/jetsonhacks/logitech-f710-module.git
-#RUN cd /workspace/src/logitech-f710-module && ./install-module.sh
 
 ## ROS2 workspace build
 RUN cd /workspace && apt update							&& \

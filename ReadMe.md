@@ -89,7 +89,7 @@ Use Yolo on Jetson platforms:
 - https://docs.ultralytics.com/guides/nvidia-jetson/
 
 RealSense SDK install for Jetson:
-- https://dev.intelrealsense.com/docs/nvidia-jetson-tx2-installation
+- https://github.com/intelRealSense/librealsense/blob/master/doc/installation_jetson.md
 
 F1Tenth's website:
 - https://roboracer.ai/build
