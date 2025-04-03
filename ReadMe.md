@@ -95,7 +95,10 @@ F1Tenth's website:
 - https://roboracer.ai/build
 
 ## Useful commands
-- ROS node topology: `rrun rqt_graph rqt_graphpeed`
+- Starting F1 stack: `ros2 launch f1tenth_stack bringup_launch.py`
+- Intel RealSense starting camera: `ros2 launch realsense2_camera rs_launch.py`
+- Starting Rviz2: `rviz2`
+- ROS node topology: `ros2 run rqt_graph rqt_graph`
 ![plot](utility/rqt_graph.png)
 
 - ...
