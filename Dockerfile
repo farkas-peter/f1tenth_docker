@@ -28,6 +28,7 @@ RUN apt-get update 									 && \
 		sudo 											\
 		telnet 											\
 		terminator 										\
+		tmux											\
 		vim 											\
 		wget 										 && \
 	apt-get clean -qq 								 && \
