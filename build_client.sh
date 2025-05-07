@@ -7,10 +7,10 @@ export HOST_UID=$(id -u)
 source .env
 
 # # Set base image based on the architecture id  of the host machine 
-export BASE_IMG="nvidia/cuda:12.2.0-base-ubuntu22.04"
+export BASE_IMG="nvidia/cuda:11.6.1-base-ubuntu20.04"
 
 if [ "$(dpkg --print-architecture)" == "amd64" ]; then
-    BASE_IMG="nvidia/cuda:12.2.0-base-ubuntu22.04"
+    BASE_IMG="nvidia/cuda:11.6.1-base-ubuntu20.04"
 elif [ "$(dpkg --print-architecture)" == "arm64" ]; then
     BASE_IMG="ultralytics/ultralytics:latest-jetson-jetpack5"
 else
