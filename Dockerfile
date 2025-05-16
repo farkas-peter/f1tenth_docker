@@ -1,6 +1,6 @@
 ARG HOST_UID=1000
 ARG HOST_GID=1000
-ARG BASE_IMG=nvidia/cuda:12.2.0-base-ubuntu22.04
+ARG BASE_IMG=nvidia/cuda:11.6.1-base-ubuntu20.04
 
 FROM $BASE_IMG
 
