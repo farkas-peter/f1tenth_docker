@@ -94,6 +94,17 @@ RealSense SDK install for Jetson:
 F1Tenth's website:
 - https://roboracer.ai/build
 
+## RealSense SDK install for Jetson
+1. Register the server's public key:
+- sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key F6E65AC044F831AC80A06380C8B3A55A6F3EFCDE
+2. Add the server to the list of repositories:
+- sudo add-apt-repository "deb https://librealsense.intel.com/Debian/apt-repo $(lsb_release -cs) main" -u
+3. Install the SDK:
+- sudo apt-get install librealsense2-utils
+- sudo apt-get install librealsense2-dev
+4. Run the RealSense SDK:
+- realsense-viewer
+
 ## Useful commands
 - Starting F1 stack: `ros2 launch f1tenth_stack bringup_launch.py`
 - Intel RealSense starting camera: `ros2 launch realsense2_camera rs_launch.py`
