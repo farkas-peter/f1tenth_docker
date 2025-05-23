@@ -1,4 +1,4 @@
-# Docker for developing F1TENTH Project
+# Docker for developing a stereo vision based F1Tenth Project
 
 ---
 
