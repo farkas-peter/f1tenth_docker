@@ -1,4 +1,4 @@
-# Docker for developing F1TENTH Project
+# Docker for developing a stereo vision based F1Tenth Project
 
 ---
 
@@ -108,6 +108,17 @@ Recommended to wait until the extensions are installed before the vscode closed 
 
 ---
 
+## RealSense SDK install for Jetson
+Run the follow `.sh` script in the `utility` folder to install RealSense SDK:
+- `rs_sdk_install.sh`
+
+After the installation, run the following command to open the RealSense SDK:
+- `realsense-viewer`
+
+<span style="color:red; font-weight:bold">Note: The SDK must be installed on the Jetson as well, to access the IMU in the SDK inside the container. </span>
+
+---
+
 ## Link collection
 Use Yolo on Jetson platforms:
 - https://docs.ultralytics.com/guides/nvidia-jetson/
@@ -118,13 +129,7 @@ RealSense SDK install for Jetson:
 F1Tenth's website:
 - https://roboracer.ai/build
 
-## RealSense SDK install for Jetson
-Run this shellscript in utility folder to install RealSense SDK:
-- rs_sdk_install.sh
-
-After the installation, run the following to open the RealSense SDK:
-- realsense-viewer
-
+---
 
 ## Command collection
 - Starting F1 stack: `ros2 launch f1tenth_stack bringup_launch.py`
