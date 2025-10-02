@@ -120,6 +120,21 @@ After the installation, run the following command to open the RealSense SDK:
 
 ---
 
+## Testing Python Version
+After building and starting the container, you can verify that Python 3.10+ is installed by running:
+```bash
+./utility/test_python_version.sh
+```
+
+Or manually check the Python version inside the container:
+```bash
+docker exec f1tenth_developer_container python3 --version
+```
+
+Expected output: `Python 3.10.x` or higher
+
+---
+
 ## Link collection
 Use Yolo on Jetson platforms:
 - https://docs.ultralytics.com/guides/nvidia-jetson/
