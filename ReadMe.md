@@ -54,9 +54,10 @@ earlier used container will be deleted with all the modification within it.</spa
 - `Dockerfile`
 
     - On the Jetson, based on: [ultralytics/ultralytics:latest-jetson-jetpack5](https://hub.docker.com/layers/ultralytics/ultralytics/latest-jetson-jetpack5/images/sha256-5f3d98f3d08b7d72142f7f720c8d6080a0d3138abb25bb9250c6ad1d6ea05a0c?context=explore), which is built from [nvcr.io/nvidia/l4t-jetpack:r35.4.1](https://catalog.ngc.nvidia.com/orgs/nvidia/containers/l4t-jetpack/tags) for YOLO applications
-    - On external PC/Laptop, based on: [nvidia/cuda:11.6.1-base-ubuntu20.04](https://hub.docker.com/layers/nvidia/cuda/11.6.1-base-ubuntu20.04/images/sha256-70e97597e8bbaba961143b380bae5b092d09bdbed622fdb3069a572df68e476d)
+    - On external PC/Laptop, based on: [nvidia/cuda:11.6.1-base-ubuntu20.04](https://hub.docker.com/layers/nvidia/cuda/11.6.1-base-ubuntu20.04/images/sha256-70e97597e8bbaba961143b380bae5b092d09bdbed622fdb3069a572df68e476d) with Python 3.10+ installed from deadsnakes PPA
     - Contains basic applications.
     - Main working folders are created.
+    - **Python version**: Python 3.10 is installed and set as the default `python3` interpreter using update-alternatives.
 
 - `docker-compose.yml`
     - Contains a F1TENTH_developer_container service, that will create the container. 

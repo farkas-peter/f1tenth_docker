@@ -36,7 +36,12 @@ RUN apt-get update 									 && \
 	rm -rf /tmp/* 
 
 ## Install Python 3.10+ from deadsnakes PPA
-RUN add-apt-repository ppa:deadsnakes/ppa -y 		 && \
+RUN apt-get update 									 && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y \
+		gnupg 										 \
+		ca-certificates 							 && \
+	wget -qO- https://keyserver.ubuntu.com/pks/lookup?op=get\&search=0xF23C5A6CF475977595C89F51BA6932366A755776 | gpg --dearmor -o /usr/share/keyrings/deadsnakes-archive-keyring.gpg && \
+	echo "deb [signed-by=/usr/share/keyrings/deadsnakes-archive-keyring.gpg] http://ppa.launchpad.net/deadsnakes/ppa/ubuntu focal main" > /etc/apt/sources.list.d/deadsnakes.list && \
 	apt-get update 									 && \
 	DEBIAN_FRONTEND=noninteractive apt-get install -y \
 		python3.10 									 \
