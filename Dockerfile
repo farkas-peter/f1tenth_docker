@@ -88,13 +88,14 @@ RUN apt update && apt install -y 											\
 		ros-$ROS_DISTRO-rosbag2-storage-mcap 								\
 		ros-$ROS_DISTRO-rqt-gui-py 											\
 		ros-$ROS_DISTRO-rqt-tf-tree 										\
+		ros-$ROS_DISTRO-nmea-msgs										\
 		ros-$ROS_DISTRO-rtcm-msgs 											\
 		ros-$ROS_DISTRO-rviz2 												\
 		ros-$ROS_DISTRO-tf2-eigen 												\
 		ros-$ROS_DISTRO-udp-msgs 											\
 		ros-$ROS_DISTRO-usb-cam 											\
 		ros-$ROS_DISTRO-xacro 											 && \
-	pip install pygame pygame_gui setuptools==58.2.0  && 		\
+	pip install pygame pygame_gui utm setuptools==58.2.0  && 		\
 	apt-get clean -qq 													 && \
 	rm -rf /var/lib/apt/lists/* 										 && \
 	rm -rf /tmp/* 
