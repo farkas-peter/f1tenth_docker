@@ -17,14 +17,14 @@ services:
     environment:
       VEHICLE: $VEHICLE
       QT_X11_NO_MITSHM: 1
-      DISPLAY: $DISPLAY
+      #DISPLAY: $DISPLAY
     volumes:
       - /dev:/dev
-      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      #- /tmp/.X11-unix:/tmp/.X11-unix:rw
       - /tmp/argus_socket:/tmp/argus_socket:rw # For jetson machines
 
       - ./.env:/workspace/.env
-      - /home/dev/.Xauthority:/home/f1tenth/.Xauthority:ro
+      #- /home/dev/.Xauthority:/home/f1tenth/.Xauthority:ro
 
       - ../F1TENTH_LOG:/workspace/LOG
       - ./entry.sh:/entry.sh
@@ -35,9 +35,12 @@ services:
     working_dir: /workspace
     user: f1tenth
     privileged: true
+    group_add:
+      - "101"
+    
     stdin_open: true 
     tty: true        
-    restart: always  # no/always
+    restart: unless-stopped  # no/always
 
     ipc: host
     network_mode: "host"
