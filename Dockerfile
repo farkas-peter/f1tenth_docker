@@ -67,37 +67,38 @@ RUN apt update 															&& \
 
 # Adding additional packages
 RUN apt update && apt install -y 											\
-		libasio-dev 														\
-		pcl-tools 															\
-		python3-tk 															\
-		ros-$ROS_DISTRO-asio-cmake-module 										\
-		ros-$ROS_DISTRO-ackermann-msgs 										\
+		libasio-dev 												\
+		pcl-tools 												\
+		python3-tk 												\
+		ros-$ROS_DISTRO-asio-cmake-module 									\
+		ros-$ROS_DISTRO-ackermann-msgs 									\
 		ros-$ROS_DISTRO-camera-calibration 									\
-		ros-$ROS_DISTRO-can-msgs 											\
-		ros-$ROS_DISTRO-cv-bridge 											\
-		ros-$ROS_DISTRO-gps-msgs 											\
-		ros-$ROS_DISTRO-joy 												\
-		ros-$ROS_DISTRO-librealsense2*										\
+		ros-$ROS_DISTRO-can-msgs 										\
+		ros-$ROS_DISTRO-cv-bridge 										\
+		ros-$ROS_DISTRO-gps-msgs 										\
+		ros-$ROS_DISTRO-joy 											\
+		ros-$ROS_DISTRO-librealsense2*									\
 		ros-$ROS_DISTRO-message-filters 									\
 		ros-$ROS_DISTRO-pcl-conversions 									\
-		ros-$ROS_DISTRO-pcl-ros 									\
+		ros-$ROS_DISTRO-pcl-ros 										\
 		ros-$ROS_DISTRO-plotjuggler-ros 									\
 		ros-$ROS_DISTRO-python-qt-binding 									\
 		ros-$ROS_DISTRO-realsense2-*										\
 		ros-$ROS_DISTRO-robot-localization 									\
-		ros-$ROS_DISTRO-rosbag2-storage-mcap 								\
-		ros-$ROS_DISTRO-rqt-gui-py 											\
+		ros-$ROS_DISTRO-rosbag2-storage-mcap 									\
+		ros-$ROS_DISTRO-rqt-gui-py 										\
 		ros-$ROS_DISTRO-rqt-tf-tree 										\
 		ros-$ROS_DISTRO-nmea-msgs										\
-		ros-$ROS_DISTRO-rtcm-msgs 											\
-		ros-$ROS_DISTRO-rviz2 												\
-		ros-$ROS_DISTRO-tf2-eigen 												\
-		ros-$ROS_DISTRO-udp-msgs 											\
-		ros-$ROS_DISTRO-usb-cam 											\
-		ros-$ROS_DISTRO-xacro 											 && \
-	pip install pygame pygame_gui utm setuptools==58.2.0  && 		\
-	apt-get clean -qq 													 && \
-	rm -rf /var/lib/apt/lists/* 										 && \
+		ros-$ROS_DISTRO-rtcm-msgs 										\
+		ros-$ROS_DISTRO-rviz2 											\
+		ros-$ROS_DISTRO-sensor-msgs-py 									\
+                ros-$ROS_DISTRO-tf2-eigen 										\
+		ros-$ROS_DISTRO-udp-msgs 										\
+		ros-$ROS_DISTRO-usb-cam 										\
+		ros-$ROS_DISTRO-xacro 											&& \
+	pip install open3d pygame pygame_gui utm setuptools==58.2.0  						&& \
+	apt-get clean -qq 												&& \
+	rm -rf /var/lib/apt/lists/* 										 	&& \
 	rm -rf /tmp/* 
 
 # ros-$ROS_DISTRO-foxglove-bridge 	
@@ -126,6 +127,10 @@ RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc 			&& \
 	echo "export RCUTILS_COLORIZED_OUTPUT=1" >> /etc/bash.bashrc 				&& \
 	echo "set -a && source /workspace/.env && set +a" >> /etc/bash.bashrc 		&& \
 	echo "cd /workspace" >> /etc/bash.bashrc
+RUN echo "parse_git_branch(){" >> /etc/bash/.bashrc 														&& \
+	echo "	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' " >> /etc/bash/.bashrc  	&& \
+	echo "}" >> /etc/bash.bashrc 																	 	&& \
+	echo "export PS1='\\[\\e]0;\\u@\\h: \\w\\a\\]\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[33m\\]\$(parse_git_branch)\\[\\033[00m\\] $ '" >> /etc/bash.bashrc 
 
 ## Adding additional packages
 RUN cd /workspace/src && pip install onnxslim==0.1.48 numpy==1.23.5 pyrealsense2
