@@ -11,28 +11,29 @@ ARG HOST_GID
 SHELL ["/bin/bash", "-c"]
 
 ## Update and add dependencies
-RUN apt-get update 									 && \
-	DEBIAN_FRONTEND=noninteractive apt install -y curl	\ 
+RUN apt-get update 									 		&& \
+	DEBIAN_FRONTEND=noninteractive apt install -y 						\
+		curl 											\ 
 		dbus-x11 										\
 		gnome-terminal 									\
 		htop 											\
 		iproute2 										\
-		libcanberra-gtk-module libcanberra-gtk3-module 	\
-		mc 												\
+		libcanberra-gtk-module libcanberra-gtk3-module 					\
+		mc 											\
 		nano 											\
 		net-tools 										\
 		openssh-server 									\
-		python3-pip 													\
+		python3-pip 										\
 		snap 											\
-		software-properties-common 						\
+		software-properties-common 								\
 		sudo 											\
-		telnet 											\
+		telnet 										\
 		terminator 										\
 		tmux											\
 		vim 											\
-		wget 										 && \
-	apt-get clean -qq 								 && \
-	rm -rf /var/lib/apt/lists/* 					 && \
+		wget 										 	&& \
+	apt-get clean -qq 								 		&& \
+	rm -rf /var/lib/apt/lists/* 					 				&& \
 	rm -rf /tmp/* 
 
 # Set ssh config
@@ -40,65 +41,66 @@ RUN cat /etc/ssh/sshd_config | sed -i 's/PermitRootLogin prohibit-password/Permi
 RUN cat /etc/ssh/sshd_config | sed -i 's/#Port 22/Port 24/' /etc/ssh/sshd_config
 
 # Set user
-RUN useradd -m $HOST_USER 												&& \
+RUN useradd -m $HOST_USER 										&& \
 	echo "$HOST_USER:$HOST_USER" | chpasswd  							&& \
 	usermod --shell /bin/bash $HOST_USER 								&& \
-	groupadd -f -r gpio 												&& \
-	usermod -aG gpio,render,sudo,video,dialout $HOST_USER 						&& \
-	echo "$HOST_USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$HOST_USER && \
+	groupadd -f -r gpio 										&& \
+	usermod -aG gpio,render,sudo,video,dialout $HOST_USER 					&& \
+	echo "$HOST_USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/$HOST_USER 			&& \
 	usermod  --uid $HOST_UID $HOST_USER 								&& \
 	groupmod --gid $HOST_GID $HOST_USER
 
 ## Install ros foxy
 ENV ROS_DISTRO=foxy
-RUN apt update 															&& \ 
-	add-apt-repository universe  										&& \ 
+RUN apt update 											&& \ 
+	add-apt-repository universe  									&& \ 
 	curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
-	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null 								&& \
 	apt update && DEBIAN_FRONTEND=noninteractive apt install -y ros-$ROS_DISTRO-ros-base \
-		ros-dev-tools 													&& \
-	rosdep init 														&& \
+		ros-dev-tools 											&& \
+	rosdep init 												&& \
 	rosdep update --rosdistro $ROS_DISTRO 								&& \
-	apt-get clean -qq 													&& \
+	apt-get clean -qq 											&& \
 	rm -rf /var/lib/apt/lists/* 										&& \
 	rm -rf /tmp/* 
 
 ## Adding repositories/PPAs
 
 # Adding additional packages
-RUN apt update && apt install -y 											\
-		libasio-dev 												\
-		pcl-tools 												\
-		python3-tk 												\
-		ros-$ROS_DISTRO-asio-cmake-module 									\
-		ros-$ROS_DISTRO-ackermann-msgs 									\
-		ros-$ROS_DISTRO-camera-calibration 									\
-		ros-$ROS_DISTRO-can-msgs 										\
-		ros-$ROS_DISTRO-cv-bridge 										\
-		ros-$ROS_DISTRO-gps-msgs 										\
-		ros-$ROS_DISTRO-joy 											\
-		ros-$ROS_DISTRO-librealsense2*									\
-		ros-$ROS_DISTRO-message-filters 									\
-		ros-$ROS_DISTRO-pcl-conversions 									\
-		ros-$ROS_DISTRO-pcl-ros 										\
-		ros-$ROS_DISTRO-plotjuggler-ros 									\
-		ros-$ROS_DISTRO-python-qt-binding 									\
-		ros-$ROS_DISTRO-realsense2-*										\
-		ros-$ROS_DISTRO-robot-localization 									\
-		ros-$ROS_DISTRO-rosbag2-storage-mcap 									\
-		ros-$ROS_DISTRO-rqt-gui-py 										\
-		ros-$ROS_DISTRO-rqt-tf-tree 										\
-		ros-$ROS_DISTRO-nmea-msgs										\
-		ros-$ROS_DISTRO-rtcm-msgs 										\
-		ros-$ROS_DISTRO-rviz2 											\
-		ros-$ROS_DISTRO-sensor-msgs-py 									\
-                ros-$ROS_DISTRO-tf2-eigen 										\
-		ros-$ROS_DISTRO-udp-msgs 										\
-		ros-$ROS_DISTRO-usb-cam 										\
-		ros-$ROS_DISTRO-xacro 											&& \
-	pip install open3d pygame pygame_gui utm setuptools==58.2.0  						&& \
-	apt-get clean -qq 												&& \
-	rm -rf /var/lib/apt/lists/* 										 	&& \
+RUN apt update && apt install -y 										\
+		libasio-dev 											\
+		pcl-tools 											\
+		python3-tk 											\
+		ros-$ROS_DISTRO-asio-cmake-module 								\
+		ros-$ROS_DISTRO-ackermann-msgs 								\
+		ros-$ROS_DISTRO-camera-calibration 								\
+		ros-$ROS_DISTRO-can-msgs 									\
+		ros-$ROS_DISTRO-cv-bridge 									\
+		ros-$ROS_DISTRO-gps-msgs 									\
+		ros-$ROS_DISTRO-joy 										\
+		ros-$ROS_DISTRO-librealsense2*								\
+		ros-$ROS_DISTRO-message-filters 								\
+		ros-$ROS_DISTRO-pcl-conversions 								\
+		ros-$ROS_DISTRO-pcl-ros 									\
+		ros-$ROS_DISTRO-plotjuggler-ros 								\
+		ros-$ROS_DISTRO-python-qt-binding 								\
+		ros-$ROS_DISTRO-realsense2-*									\
+		ros-$ROS_DISTRO-robot-localization 								\
+		ros-$ROS_DISTRO-rosbag2-storage-mcap 								\
+		ros-$ROS_DISTRO-rqt-gui-py 									\
+		ros-$ROS_DISTRO-rqt-tf-tree 									\
+		ros-$ROS_DISTRO-nmea-msgs									\
+		ros-$ROS_DISTRO-rtcm-msgs 									\
+		ros-$ROS_DISTRO-rviz2 										\
+		ros-$ROS_DISTRO-sensor-msgs-py 								\
+                ros-$ROS_DISTRO-tf2-eigen 									\
+		ros-$ROS_DISTRO-udp-msgs 									\
+		ros-$ROS_DISTRO-usb-cam 									\
+		ros-$ROS_DISTRO-xacro 										&& \
+	pip install --no-cache-dir --ignore-installed blinker						&& \
+	pip install open3d pygame pygame_gui utm setuptools==58.2.0  					&& \
+	apt-get clean -qq 											&& \
+	rm -rf /var/lib/apt/lists/* 										&& \
 	rm -rf /tmp/* 
 
 # ros-$ROS_DISTRO-foxglove-bridge 	
@@ -114,22 +116,23 @@ RUN cd /workspace/src && git clone https://github.com/farkas-peter/f1tenth_syste
 
 
 ## ROS2 workspace build
-RUN cd /workspace && apt update							&& \
-	source /opt/ros/$ROS_DISTRO/setup.bash 		&& \
-	DEBIAN_FRONTEND=noninteractive rosdep update --include-eol-distros && \
-	DEBIAN_FRONTEND=noninteractive rosdep install --from-paths src -i -y && \
+RUN cd /workspace && apt update										&& \
+	source /opt/ros/$ROS_DISTRO/setup.bash 								&& \
+	DEBIAN_FRONTEND=noninteractive rosdep update --include-eol-distros 					&& \
+	DEBIAN_FRONTEND=noninteractive rosdep install --from-paths src -i -y 				&& \
 	colcon build --symlink-install
 
 ## Settings in bashrc
-RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc 			&& \
-	echo "source /workspace/install/setup.bash" >> /etc/bash.bashrc 			&& \
-	echo "export ROS_LOG_DIR=/workspace/LOG/ROS_OUTPUT" >> /etc/bash.bashrc 	&& \
-	echo "export RCUTILS_COLORIZED_OUTPUT=1" >> /etc/bash.bashrc 				&& \
-	echo "set -a && source /workspace/.env && set +a" >> /etc/bash.bashrc 		&& \
+RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /etc/bash.bashrc 					&& \
+	echo "source /workspace/install/setup.bash" >> /etc/bash.bashrc 					&& \
+	echo "export ROS_LOG_DIR=/workspace/LOG/ROS_OUTPUT" >> /etc/bash.bashrc 				&& \
+	echo "export RCUTILS_COLORIZED_OUTPUT=1" >> /etc/bash.bashrc 					&& \
+	echo "set -a && source /workspace/.env && set +a" >> /etc/bash.bashrc 				&& \
 	echo "cd /workspace" >> /etc/bash.bashrc
-RUN echo "parse_git_branch(){" >> /etc/bash/.bashrc 														&& \
-	echo "	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' " >> /etc/bash/.bashrc  	&& \
-	echo "}" >> /etc/bash.bashrc 																	 	&& \
+	
+RUN echo "parse_git_branch(){" >> /etc/bash.bashrc 								&& \
+	echo "	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/' " >> /etc/bash.bashrc  	&& \
+	echo "}" >> /etc/bash.bashrc 										&& \
 	echo "export PS1='\\[\\e]0;\\u@\\h: \\w\\a\\]\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[33m\\]\$(parse_git_branch)\\[\\033[00m\\] $ '" >> /etc/bash.bashrc 
 
 ## Adding additional packages
