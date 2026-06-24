@@ -30,13 +30,14 @@ services:
       - ./entry.sh:/entry.sh
       
       - ../ros2_f1tenth:/workspace/src/ros2_f1tenth
+      - ../f1tenth_system:/workspace/src/f1tenth_system
 
     working_dir: /workspace
     user: f1tenth
     privileged: true
     stdin_open: true 
     tty: true        
-    restart: no  # no/always
+    restart: always  # no/always
 
     ipc: host
     network_mode: "host"
