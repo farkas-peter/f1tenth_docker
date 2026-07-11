@@ -36,6 +36,25 @@ RUN apt-get update 									 		&& \
 	rm -rf /var/lib/apt/lists/* 					 				&& \
 	rm -rf /tmp/* 
 
+## Install Python 3.10+ from deadsnakes PPA
+RUN apt-get update 									 && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y \
+		gnupg 										 \
+		ca-certificates 							 && \
+	wget -qO- https://keyserver.ubuntu.com/pks/lookup?op=get\&search=0xF23C5A6CF475977595C89F51BA6932366A755776 | gpg --dearmor -o /usr/share/keyrings/deadsnakes-archive-keyring.gpg && \
+	echo "deb [signed-by=/usr/share/keyrings/deadsnakes-archive-keyring.gpg] http://ppa.launchpad.net/deadsnakes/ppa/ubuntu focal main" > /etc/apt/sources.list.d/deadsnakes.list && \
+	apt-get update 									 && \
+	DEBIAN_FRONTEND=noninteractive apt-get install -y \
+		python3.10 									 \
+		python3.10-dev 								 \
+		python3.10-venv 							 \
+		python3.10-distutils 						 && \
+	update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 && \
+	update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.10 2 && \
+	apt-get clean -qq 								 && \
+	rm -rf /var/lib/apt/lists/* 					 && \
+	rm -rf /tmp/* 
+
 # Set ssh config
 RUN cat /etc/ssh/sshd_config | sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN cat /etc/ssh/sshd_config | sed -i 's/#Port 22/Port 24/' /etc/ssh/sshd_config
